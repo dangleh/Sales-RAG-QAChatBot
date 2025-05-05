@@ -1,17 +1,26 @@
-import streamlit as st
-from langchain_community.embeddings import OpenAIEmbeddings
+from langchain_ollama import OllamaLLM
+from langchain_ollama.embeddings import OllamaEmbeddings
 from langchain_chroma import Chroma
-from langchain.chains import RetrievalQA
 from langchain.prompts import PromptTemplate
-from langchain_openai import OpenAI, OpenAIEmbeddings
-from langchain_core.prompts import PromptTemplate
+from langchain.chains import RetrievalQA
 import csv
+import streamlit as st
+
+llm = OllamaLLM(
+    model="llama3.2", 
+    base_url="http://localhost:11434",
+    temperature=0
+)
+
+embeddings = OllamaEmbeddings(
+    model="nomic-embed-text", 
+    base_url="http://localhost:11434"  # Adjust the base URL if needed
+)
 
 # --- INITIAL SETUP ---
 # Load embeddings and vectorstore
 @st.cache_resource
 def load_vectorstore():
-    embedding = OpenAIEmbeddings()
     docs = []
     with open("service_quote_media.csv", encoding="utf-8") as f:
         reader = csv.DictReader(f)
@@ -23,7 +32,7 @@ def load_vectorstore():
                     f"Số lượng: {row['Số Lượng']}\n"
                     f"Đơn giá: {row['Đơn Giá (₫)']}\n")
             docs.append(text)
-    vector_store = Chroma.from_texts(texts=docs, embedding=embedding, persist_directory="./chroma_media")
+    vector_store = Chroma.from_texts(texts=docs, embedding=embeddings, persist_directory="./chroma_media")
     return vector_store.as_retriever(search_kwargs={"k": 3})
 
 template = """
@@ -48,7 +57,6 @@ prompt = PromptTemplate(
 
 # Build the RAG QA chain@st.cache_resource
 def build_qa_chain(retriever):
-    llm = OpenAI(temperature=0)
     return RetrievalQA.from_chain_type(
         llm=llm,
         chain_type="stuff",

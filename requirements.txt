@@ -5,3 +5,5 @@ langchain-community
 langchain-ollama
 langchain-chroma
 streamlit
+langchain-community
+langchain-openai
