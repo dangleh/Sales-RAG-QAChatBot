@@ -1,5 +1,6 @@
-import pysqlite3
-pysqlite3.install_as_sqlite3()
+__import__('pysqlite3')
+import sys
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 
 import streamlit as st
 from langchain_chroma import Chroma
