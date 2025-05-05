@@ -8,3 +8,4 @@ streamlit
 langchain-community
 langchain-openai
 protobuf<4
+pysqlite3-binary

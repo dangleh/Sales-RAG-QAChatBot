@@ -1,3 +1,6 @@
+import pysqlite3
+pysqlite3.install_as_sqlite3()
+
 import streamlit as st
 from langchain_chroma import Chroma
 from langchain.chains import RetrievalQA
