@@ -6,6 +6,9 @@ from langchain_openai import OpenAI, OpenAIEmbeddings
 from langchain_core.prompts import PromptTemplate
 import csv
 
+import os
+os.environ["OTEL_PYTHON_DISABLED"] = "true"
+
 # --- INITIAL SETUP ---
 # Load embeddings and vectorstore
 @st.cache_resource
