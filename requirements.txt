@@ -7,3 +7,4 @@ langchain-chroma
 streamlit
 langchain-community
 langchain-openai
+protobuf<4

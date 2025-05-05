@@ -7,7 +7,7 @@ from langchain_core.prompts import PromptTemplate
 import csv
 
 import os
-os.environ["OTEL_PYTHON_DISABLED"] = "true"
+os.environ["PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION"] = "python"
 
 # --- INITIAL SETUP ---
 # Load embeddings and vectorstore
