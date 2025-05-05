@@ -1,0 +1,7 @@
+pandas
+pydantic
+langchain-chroma
+langchain-community
+langchain-ollama
+langchain-chroma
+streamlit
